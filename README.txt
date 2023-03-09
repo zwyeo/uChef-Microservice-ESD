@@ -24,4 +24,4 @@ Do not type in index.html into the address bar as it will not work. Just use the
 To terminate your session, simply press Ctrl + C on your terminal.
 
 ### Credits
-G2T2 - Douglas, Zhi Wei, Jaden, Joseph
+G2T2 - Douglas, Zhi Wei, Jaden, Joseph, Zu Yao
