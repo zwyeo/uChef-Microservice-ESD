@@ -179,7 +179,7 @@ export default {
         });
     }
 
-    console.log(this.recommendations_list);
+    // console.log(this.recommendations_list);
   },
   methods: {
     populatePopularRecipe() {

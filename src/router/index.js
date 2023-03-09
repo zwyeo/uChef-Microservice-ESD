@@ -8,6 +8,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import AddRecipePage from "../views/AddRecipePage.vue";
 import UpdateRecipePage from "../views/UpdateRecipePage.vue";
+import Order from "../views/Order.vue";
 import store from "@/store";
 
 import * as firebase from "firebase/app";
@@ -63,6 +64,12 @@ const routes = [
     name: "add-recipe-page",
     component: AddRecipePage,
   },
+  {
+    path: "/order/:id",
+    name: "order",
+    component: Order,
+    props: true,
+  },
 ];
 
 const router = createRouter({
@@ -76,7 +83,7 @@ const router = createRouter({
 // NAVIGATION GAURDS
 router.beforeEach((to, from, next) => {
   const requriesAuth = to.matched.some((record) => record.meta.requriesAuth);
-  console.log(to, from);
+  // console.log(to);
   const isAuthenthicated = getAuth().currentUser;
   if (requriesAuth && !isAuthenthicated) {
   } else {

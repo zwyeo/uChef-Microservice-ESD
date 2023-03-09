@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       ratings: null,
-    }
+    };
   },
   props: ["title", "img", "id"],
   created() {
@@ -78,7 +78,7 @@ export default {
       )
       .then((response) => {
         if (response.data != null) {
-          console.log(response.data);
+          // console.log(response.data);
           var total_rating = 0;
           var num_of_rating = 0;
           for (let review in Object.values(response.data)[0]) {
@@ -102,7 +102,7 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 

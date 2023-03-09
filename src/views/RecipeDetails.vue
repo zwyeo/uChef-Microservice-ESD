@@ -192,7 +192,12 @@
         <div
           class="col-12 col-lg-3 animate__animated animate__backInRight animate__delay-1s animate__fast"
         >
-          <h4 class="">Ingredients</h4>
+          <div class="row">
+            <h4 class="col-6">Ingredients</h4>
+            <router-link :to="{ name: 'order', params: { id: this.id } }">
+              <button class="col-6 btn btn-success">Order Ingredients!</button>
+            </router-link>
+          </div>
 
           <!-- Ingredient list -->
           <div
@@ -409,7 +414,7 @@ export default {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
     //filling up the recipe details
-    console.log(this.id);
+    // console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
 
     if (isNaN(this.id)) {
@@ -420,7 +425,7 @@ export default {
         .then((response) => {
           // console.log(response.data)
           for (let entry in response.data) {
-            // console.log(response.data[entry].id)
+            // console.log(response.data[entry].id);
             if (response.data[entry].id == this.id) {
               var obj = response.data[entry];
               this.videoExist = false;
@@ -459,15 +464,15 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           let obj = response.data.meals[0];
           this.title = obj.strMeal;
           this.image = obj.strMealThumb;
           this.foodCategory = obj.strCategory;
-          console.log(obj.strYoutube);
+          // console.log(obj.strYoutube);
           if (obj.strYoutube === "") {
             this.videoExist = false;
-            console.log(this.videoExist);
+            // console.log(this.videoExist);
           }
           this.video = obj.strYoutube.replace("watch?v=", "embed/");
 
@@ -490,6 +495,9 @@ export default {
           }
         });
     }
+
+    //to link active ingredient_list to store
+    this.$store.state.ingredient_list = this.ingredient_list;
 
     //Rating
     axios
@@ -581,11 +589,11 @@ export default {
             `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
           )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             for (let bookmark in response.data) {
               str_id = bookmark;
               current = response.data[bookmark][this.foodCategory];
-              console.log(current);
+              // console.log(current);
             }
             var final = current + 1;
 
@@ -606,7 +614,7 @@ export default {
       var bookmarkRef = ref(db, `users/${userId}/bookmarks/${this.id}`);
       remove(bookmarkRef).then(() => {
         this.bookmarked = false;
-        console.log("location removed");
+        // console.log("location removed");
       });
 
       // reduce food category by 1 from user's preferences
@@ -617,11 +625,11 @@ export default {
           `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           for (let bookmark in response.data) {
             str_id = bookmark;
             current = response.data[bookmark][this.foodCategory];
-            console.log(current);
+            // console.log(current);
           }
           if (current > 0) {
             var final = current - 1;
@@ -641,11 +649,11 @@ export default {
     },
     //Video Modal Functions
     open() {
-      console.log("it works");
+      // console.log("it works");
       this.video2 = this.video.replace("watch?v=", "embed/");
     },
     close() {
-      console.log("close");
+      // console.log("close");
       this.video2 = null;
     },
   },

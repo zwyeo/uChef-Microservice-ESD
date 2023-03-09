@@ -42,6 +42,7 @@ export default createStore({
     prevRouteName: "", // To bypass the signup/name bug
     commsearched: false,
     commsearchrecipes: {},
+    ingredient_list: [],
   },
   mutations: {
     getRecipes(state, payload) {

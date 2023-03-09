@@ -60,7 +60,9 @@
       <div class="container d-flex justify-content-center">
         <div class="row row-cols-2">
           <div class="col">
-            <router-link :to="{ name: 'update-recipe-page', params: { id: this.id } }">
+            <router-link
+              :to="{ name: 'update-recipe-page', params: { id: this.id } }"
+            >
               <button class="btn btn-primary">Edit</button>
             </router-link>
           </div>
@@ -98,7 +100,7 @@ export default {
       )
       .then((response) => {
         if (response.data != null) {
-          console.log(response.data);
+          // console.log(response.data);
           var total_rating = 0;
           var num_of_rating = 0;
           for (let review in Object.values(response.data)[0]) {
@@ -122,7 +124,6 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-
   },
 };
 </script>
