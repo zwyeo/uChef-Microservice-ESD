@@ -154,4 +154,4 @@ def delete_stock(itemName):
   ), 404
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(port=5003, debug=True)
