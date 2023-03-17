@@ -9,11 +9,15 @@
       <p>[Show FP logo and price]</p>
     </div>
 
-    <div class="d-flex">
-      <div class="ms-5 me-2">Qty: {{ qty }}</div>
-      <button class="btn btn-primary me-1" @click="increaseQty()">+</button>
-      <button class="btn btn-secondary me-2" @click="decreaseQty()">-</button>
-      <button class="btn btn-danger" @click="remove()">X</button>
+    <div class="d-flex justify-content-center">
+      <div class="me-2">Qty: {{ qty }}</div>
+      <button class="btn btn-primary me-1 mb-3" @click="increaseQty()">
+        +
+      </button>
+      <button class="btn btn-secondary me-2 mb-3" @click="decreaseQty()">
+        -
+      </button>
+      <button class="btn btn-danger mb-3" @click="remove()">X</button>
     </div>
   </div>
 </template>
