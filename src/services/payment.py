@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template, url_for
+from flask import Flask, redirect, request, render_template, url_for, jsonify
 
 import stripe
 import os
@@ -59,6 +59,35 @@ def create_checkout_session():
   )
 
   return redirect(session.url, code=303)
+
+@app.route('/stripe_webhook', methods=['POST'])
+def stripe_webhook():
+    print('WEBHOOK called')
+
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+    endpoint_secret = ''
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        print('INVALID')
+        return {}, 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print('INVALID SIGNATURE')
+        return {}, 400
+
+    # Handle the event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        print('Handled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
 
 if __name__== '__main__':
     app.run(port=5005, debug=True)
