@@ -12,6 +12,7 @@ delivery_url = "http://localhost:5001/delivery"
 @app.route('/order', methods=['POST'])
 def place_order():
     # Hardcoded JSON object as input for demonstration
+    # this code never account for items that are not in both DB 
     input_json = {
         "items": [
             {

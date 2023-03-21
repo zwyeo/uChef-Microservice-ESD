@@ -95,7 +95,13 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary">Pay Now</button>
+          <button
+            type="button"
+            @click="connectSupermarket()"
+            class="btn btn-primary"
+          >
+            Connect to Supermarket!
+          </button>
         </div>
       </div>
     </div>
@@ -120,7 +126,18 @@ export default {
     this.ingredient_list = this.$store.state.ingredient_list;
     console.log(this.ingredient_list);
   },
-  methods: {},
+  methods: {
+    connectSupermarket() {
+      // talk to the backend
+      // pass the ingredients data to the backend
+      // **backend will check which supermarket to use (FP or CS)
+      // **backend will return the supermarket and the price of each ingredient
+      // ** backend will return stock status
+      // if got stock, then return supermarket and price
+      // if no stock, error handling from error microservice
+      // With the price data, will route to another page (Payment) for customer to confirm payment
+    },
+  },
 };
 </script>
 
