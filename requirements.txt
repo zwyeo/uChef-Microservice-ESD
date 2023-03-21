@@ -1,0 +1,9 @@
+flask
+stripe
+boto3
+botocore
+pika
+flask_sqlalchemy
+flask_cors
+requests
+pymysql
