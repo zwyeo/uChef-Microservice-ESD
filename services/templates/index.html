@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <button class="button is-primary" id="submitBtn">Purchase!</button>
+        </div>
+    </section>
+</body>
+
+<script>
+
+
+    document.querySelector("#submitBtn").addEventListener("click", () => {
+        // Get Checkout Session ID
+        console.log('BUTTON WORKS')
+        // stripe account test key 
+        const stripe = Stripe('pk_test_51MmDHTHHejWNjfqntLejqcMX51NluqXRdlSjEjvITvO2J14WdSXuxZVuv7Ftus56wnevZCTbchpqXXRwCNz8pxKZ00Xw45r97j')
+
+        // Redirect to Stripe Checkout
+        //this is the stripe session ID
+        stripe.redirectToCheckout({ sessionId: 'cs_test_a1MAP7RwzWdbr4EmKjALYSAQfqCvfKlS4yTfdTia4CJA8Baj4vjK58XvhS' })
+
+    });
+
+</script>
+
+</html>
