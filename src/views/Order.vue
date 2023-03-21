@@ -124,7 +124,43 @@ export default {
   },
   created() {
     this.ingredient_list = this.$store.state.ingredient_list;
-    console.log(this.ingredient_list);
+
+    // this is to clean up the ingredient names
+    var ingredientName = [];
+    const filter_words = [
+      "1lb",
+      "tbs",
+      "cup",
+      "tsp",
+      "1/2",
+      "1/4",
+      "cups",
+      "oz",
+      "100g",
+      "300g",
+      "500g",
+      "bunch",
+      "cloves",
+    ];
+
+    this.ingredient_list.forEach((ing) => {
+      let word_arr = ing.split(" ");
+      for (var i = 0; i < word_arr.length; i++) {
+        if (!isNaN(word_arr[i])) {
+          word_arr.splice(i, 1);
+        }
+        if (filter_words.includes(word_arr[i])) {
+          word_arr.splice(i, 1);
+        }
+        if (word_arr[i] === "") {
+          word_arr.splice(i, 1);
+        }
+      }
+      const str = word_arr.join(" ");
+      ingredientName.push(str);
+      this.ingredient_list = ingredientName;
+    });
+    this.$store.state.ingredient_list = ingredientName;
   },
   methods: {
     connectSupermarket() {
@@ -136,6 +172,15 @@ export default {
       // if got stock, then return supermarket and price
       // if no stock, error handling from error microservice
       // With the price data, will route to another page (Payment) for customer to confirm payment
+
+      // ---
+      // axios post the ingredients_list data to order microservice
+      axios
+        .post("http://127.0.0.1:5002/order", {
+          items: this.ingredient_list,
+        })
+        .then(console.log("posting"))
+        .catch((err) => console.log(err));
     },
   },
 };

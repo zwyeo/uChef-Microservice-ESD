@@ -499,6 +499,28 @@ export default {
     //to link active ingredient_list to store
     this.$store.state.ingredient_list = this.ingredient_list;
 
+    // ingredient_names only to put in store
+    // var ingredientName = [];
+    // const filter_words = ["1lb", "tbs", "cup"];
+
+    // this.ingredient_list.forEach((ing) => {
+    //   let word_arr = ing.split(" ");
+    //   for (var i = 0; i < word_arr.length; i++) {
+    //     if (!isNaN(word_arr[i])) {
+    //       word_arr.splice(i, 1);
+    //     }
+    //     if (filter_words.includes(word_arr[i])) {
+    //       word_arr.splice(i, 1);
+    //     }
+    //     if (word_arr[i] === "") {
+    //       word_arr.splice(i, 1);
+    //     }
+    //   }
+    //   const str = word_arr.join();
+    //   ingredientName.push(str);
+    // });
+    // this.$store.state.ingredient_list = ingredientName;
+
     //Rating
     axios
       .get(
