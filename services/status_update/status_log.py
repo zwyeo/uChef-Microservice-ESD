@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # The above shebang (#!) operator tells Unix-like environments
 # to run this file as a python3 script
+# monitor status log queue in rabbitMQ
 
 import json
 import os
@@ -25,7 +26,7 @@ def callback(channel, method, properties, body): # required signature for the ca
     body_dict = json.loads(body)
     processStatusLog(body_dict)
 
-    fcm_pusher.sendPush("System Notification", "Order Update for order ID: {}, status: {}: {}".format(body_dict['orderID'],body_dict['status'],body_dict['message']))
+    fcm_pusher.sendPush("System Notification", "Order Update for order ID: {}, status: {}".format(body_dict['orderID'],body_dict['message']))
 
     print() # print a new line feed
 
