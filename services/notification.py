@@ -10,19 +10,19 @@ def send_email():
     # Get input data from JSON object
     data = {
         "payment_details": [{
-            "payment_id": "1",
-            "price": 25
+            "payment_id": "14",
+            "price": 454.95
         }],
-        "email": "uchef216@gmail.com",
-        "delivery_address": "Rock Road"
+        "email": "joseph.ho.2021@scis.smu.edu.sg",
+        "delivery_address": "55 Rocky Road"
     }
     payment_details = data['payment_details']
     email = data['email']
     delivery_address = data['delivery_address']
 
     # Create a new SES client
-    ses = boto3.client('ses',  aws_access_key_id='AKIAVFEET5SMQOT2PTNQ',
-                   aws_secret_access_key="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", region_name='ap-southeast-1')
+    ses = boto3.client('ses',  aws_access_key_id='AKIAVFEET5SMSLP36BYB',
+                   aws_secret_access_key="f6wOJ84/W+8qyUxAasZfnIVcJusVyYr2Led9RJaz", region_name='ap-southeast-1')
 
     # Create the message body
     message_body = f"Hello,\n\nHere are your payment details:\n\nPayment ID: {payment_details[0]['payment_id']}\nPrice: {payment_details[0]['price']}\n\nDelivery Address: {delivery_address}"
