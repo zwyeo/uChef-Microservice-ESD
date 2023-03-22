@@ -10,14 +10,6 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-status_messages = {
-  "Pending": "Supermarket has been informed of your order",
-  "Processing": "Supermarket is preparing your order",
-  "In Transit": "Your order is on its way",
-  "Delivered": "Your order has been delivered",
-  "Cancelled": "Your order has been cancelled"
-}
-
 @app.route("/")
 def index():
   return render_template("fairprice.html")
@@ -26,21 +18,22 @@ def index():
 def postStatusUpdate():
   try:
     orderID = request.form['orderID']
-    status = request.form['status']
+    message = request.form['message']
     message_dict = {
       "orderID": orderID,
-      "status": status,
-      "message": status_messages[status]
+      "message": message
     }
     message = json.dumps(message_dict)
 
     amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.status', body=message, properties=pika.BasicProperties(delivery_mode = 2))
     print(" [x] Sent order status to Order_Status queue: %r" % message)
-    
+
     return message
   
   except Exception as e:
-    print(e)
+    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body=str(e), properties=pika.BasicProperties(delivery_mode = 2))
+    print(" [x] Sent order status to Error queue: %r" % str(e))
+    
     return "Error: " + str(e)
   
 if __name__ == '__main__':
