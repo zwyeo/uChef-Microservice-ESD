@@ -81,7 +81,7 @@ def stripe_webhook():
         session = event['data']['object']
         print(session)
     
-    return {}
+    return {200}
 
 if __name__== '__main__':
     app.run(port=5005, debug=True)
