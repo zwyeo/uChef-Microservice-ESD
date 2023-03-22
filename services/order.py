@@ -32,13 +32,14 @@ def place_order():
     #         }
     #     ]
     # }
-    messages = []
     items_list = []
+    total_price = 0
+    supermarket = ""
+    success = True
+
     if request.method == 'POST':
         data = request.get_json()
-        # print(data)
         items = data['items']
-        # print(items)
 
         for item in items:
             print(item)
@@ -47,89 +48,35 @@ def place_order():
                 #item is inside FP DB
                 fp_stock = fp_response.json()['data']
                 if fp_stock['quantity'] >= 1:
-                    message = {"success": True, "message": f"Order placed successfully with fairprice for {item}."}
-                    messages.append(message)
-                    items_list.append(fp_stock)
-                    
+                    items_list.append({"item": item, "price": fp_stock['price'], "quantity": 1})
+                    total_price += fp_stock['price']
+                    supermarket = "Fairprice"
+                else:
+                    success = False
+                    break # Stop the loop if the item is not available
             else: # item is not inside FP DB, check CS DB
                 cs_response = requests.get(coldstorage_url + '/' + str(item))
                 if cs_response.status_code == 200:
                     cs_stock = cs_response.json()['data']
                     if cs_stock['quantity'] >= 1:
-                        message = {"success": True, "message": f"Order placed successfully with Cold Storage for {item}."}
-                        messages.append(message)
-                        items_list.append(cs_stock)
+                        items_list.append({"item": item, "price": cs_stock['price'], "quantity": 1})
+                        total_price += cs_stock['price']
+                        supermarket = "Cold Storage"
+                    else:
+                        success = False
+                        break # Stop the loop if the item is not available
+                else:
+                    success = False
+                    break # Stop the loop if the item is not available
 
-            if fp_response.status_code == 404 and cs_response.status_code == 404:
-                message = {"success": False, "message": f"Order failed. {item} are out of stock."}
-                messages.append(message)
-
-
-
-        # print(messages)
-        # print(items_list)
-        return jsonify(messages)
+        response = {
+            "success": success,
+            "supermarket":supermarket if success else None,
+            "totalprice": total_price if success else None,
+            "order": items_list if success else None
+        }
+        return jsonify(response)
     
-    # if request.method == 'GET':
-    #     return jsonify(items_list)
-
- #------------------- JADEN"S code-------------
-
-        # return jsonify(items)
-        
-
-    # return jsonify({'result':'success'})
-
-
-
-
-
-
-
-
-    # messages = []
-    # # Check fairprice stock
-    # all_items_fairprice = True
-    # all_items_coldstorage = True
-    # for item in input_json['items']:
-    #     response = requests.get(fairprice_url + '/' + item['itemName'])
-    #     if response.status_code == 200:
-    #         stock = response.json()['data']
-    #         if stock['quantity'] >= item['quantity']:
-    #             message = {"success": True, "message": f"Order placed successfully with fairprice for {item['itemName']}."}
-    #             messages.append(message)
-    #         else:
-    #             all_items_fairprice = False
-    #     else:
-    #         all_items_fairprice = False
-
-    # # Check coldstorage stock
-    # if not all_items_fairprice:
-    #     for item in input_json['items']:
-    #         response = requests.get(coldstorage_url + '/' + item['itemName'])
-    #         if response.status_code == 200:
-    #             stock = response.json()['data']
-    #             if stock['quantity'] >= item['quantity']:
-    #                 message = {"success": True, "message": f"Order placed successfully with coldstorage for {item['itemName']}."}
-    #                 messages.append(message)
-    #             else:
-    #                 all_items_coldstorage = False
-    #         else:
-    #             all_items_coldstorage = False
-
-    # # Generate final message
-    # if all_items_fairprice:
-    #     message = {"success": True, "message": "Order placed successfully with fairprice."}
-    #     messages.append(message)
-    # elif all_items_coldstorage:
-    #     message = {"success": True, "message": "Order placed successfully with coldstorage."}
-    #     messages.append(message)
-    # else:
-    #     message = {"success": False, "message": "Order failed. All requested items are out of stock."}
-    #     messages.append(message)
-
-    # return jsonify(messages)
-
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True)
