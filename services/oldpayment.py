@@ -88,7 +88,7 @@ def stripe_webhook():
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         print(session)
-    print('HELLO')
+    
     return {}
 
 if __name__== '__main__':

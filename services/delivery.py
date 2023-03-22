@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-# import stripe
+import stripe
 import os, sys
 
 import requests
@@ -13,10 +13,10 @@ order_URL = "http://localhost:5002/order"
 fairprice_URL = "http://localhost:5003/supermarketStock"
 coldStorage_URL = "http://localhost:5004/supermarketStock"
 payment_URL = "http://localhost:5005/payment"
-notification_url = "http://localhost:5006/notification"
-error_url = "http://localhost:5007/error"
-recipe = "http://localhost:5008/recipe"
-orderStatus = "http://localhost:5009/orderStatus"
+notification_URL = "http://localhost:5006/notification"
+error_URL = "http://localhost:5007/error"
+recipe_URL = "http://localhost:5008/recipe"
+orderStatus_URL = "http://localhost:5009/orderStatus"
 
 @app.route('/delivery', methods=['POST'])
 def place_delivery():
@@ -75,8 +75,18 @@ def stripe_webhook():
 
     # Handle the event
     if event['type'] == 'checkout.session.completed':
+
         session = event['data']['object']
-        print(session)
+        email = session['customer_details']['email']
+        
+        #  2. Invoke the notification microservice
+        print('\n-----Invoking notification microservice-----')
+        notification_call = requests.post(notification_URL, json=email)
+        notification_result = notification_call.json()
+        print('notification_result:', notification_result['success'])
+        
+        print(email)
+        # return jsonify(order_result)
   
     return {}
 
