@@ -80,8 +80,7 @@ def stripe_webhook():
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         print(session)
-    
-    return {200}
-
+    print('HELLO')
+    return {}
 if __name__== '__main__':
     app.run(port=5005, debug=True)
