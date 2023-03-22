@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # The above shebang (#!) operator tells Unix-like environments
 # to run this file as a python3 script
+# monitor status log queue in rabbitMQ
 
 import json
 import os

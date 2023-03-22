@@ -39,9 +39,9 @@ def postStatusUpdate():
 if __name__ == '__main__':
   app.run(port=5100, debug=True)
 
-# use the below code to change data inside message_string
-# '{"orderID": "201", "status": "Pending", "message": "Supermarket has been informed of your order"}'
-# '{"orderID": "202", "status": "Processing", "message": "Supermarket is preparing your order"}'
-# '{"orderID": "203", "status": "In Transit", "message": "Your order is on its way"}'
-# '{"orderID": "204", "status": "Delivered", "message": "Your order has been delivered"}'
-# '{"orderID": "205", "status": "Cancelled", "message": "Your order has been cancelled"}'
+# use the below code as reference data for the message
+# '{"orderID": "201", "message": "Supermarket has been informed of your order"}'
+# '{"orderID": "202", "message": "Supermarket is preparing your order"}'
+# '{"orderID": "203", "message": "Your order is on its way"}'
+# '{"orderID": "204", "message": "Your order has been delivered"}'
+# '{"orderID": "205", "message": "Your order has been cancelled"}'

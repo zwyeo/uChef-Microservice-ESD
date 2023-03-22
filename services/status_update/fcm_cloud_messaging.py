@@ -1,3 +1,6 @@
+# firebase cloud messaging setup file
+# DONT EDIT UNLESS NECESSARY
+
 import firebase_admin
 from firebase_admin import credentials, messaging
 
