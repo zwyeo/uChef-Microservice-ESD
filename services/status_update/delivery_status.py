@@ -1,7 +1,6 @@
-# this file is used to push the same status update to the rabbitMQ queue all the time
-# default data is found in line 24 (message_string) - edit line 24 to change the data
+# this file is used to push the status update to the rabbitMQ queue
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 import amqp_setup
@@ -11,21 +10,39 @@ import json
 app = Flask(__name__)
 CORS(app)
 
+status_messages = {
+  "Pending": "Supermarket has been informed of your order",
+  "Processing": "Supermarket is preparing your order",
+  "In Transit": "Your order is on its way",
+  "Delivered": "Your order has been delivered",
+  "Cancelled": "Your order has been cancelled"
+}
+
 @app.route("/")
 def index():
-    return "Please navigate to /postStatusUpdate to post a status update."
+  return render_template("fairprice.html")
 
-@app.route("/postStatusUpdate")
+@app.route("/postStatusUpdate", methods=['GET', 'POST'])
 def postStatusUpdate():
-  message_string = '{"orderID": "201", "status": "Pending", "message": "Supermarket has been informed of your order"}'
-  message_json = json.loads(message_string)
-  message = json.dumps(message_json)
+  try:
+    orderID = request.form['orderID']
+    status = request.form['status']
+    message_dict = {
+      "orderID": orderID,
+      "status": status,
+      "message": status_messages[status]
+    }
+    message = json.dumps(message_dict)
 
-  amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.status', body=message, properties=pika.BasicProperties(delivery_mode = 2))
+    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.status', body=message, properties=pika.BasicProperties(delivery_mode = 2))
+    print(" [x] Sent order status to Order_Status queue: %r" % message)
+    
+    return message
   
-  print(" [x] Sent order status to Order_Status queue: %r" % message)
-  return message
-
+  except Exception as e:
+    print(e)
+    return "Error: " + str(e)
+  
 if __name__ == '__main__':
   app.run(port=5100, debug=True)
 
