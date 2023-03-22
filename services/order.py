@@ -41,7 +41,8 @@ def place_order():
         # print(items)
 
         for item in items:
-            fp_response = requests.get(fairprice_url + '/' + item)
+            print(item)
+            fp_response = requests.get(fairprice_url + '/' + str(item))
             if fp_response.status_code == 200:
                 #item is inside FP DB
                 fp_stock = fp_response.json()['data']
@@ -51,7 +52,7 @@ def place_order():
                     items_list.append(fp_stock)
                     
             else: # item is not inside FP DB, check CS DB
-                cs_response = requests.get(coldstorage_url + '/' + item)
+                cs_response = requests.get(coldstorage_url + '/' + str(item))
                 if cs_response.status_code == 200:
                     cs_stock = cs_response.json()['data']
                     if cs_stock['quantity'] >= 1:
