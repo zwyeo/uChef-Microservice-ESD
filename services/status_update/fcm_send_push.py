@@ -1,3 +1,6 @@
+# firebase cloud messaging setup file
+# DONT EDIT UNLESS NECESSARY
+
 import fcm_cloud_messaging as fcm
 
 # token will need to be taken from Android application
