@@ -62,34 +62,34 @@ def create_checkout_session():
 
 
 
-@app.route('/stripe_webhook', methods=['POST'])
-def stripe_webhook():
-    print('WEBHOOK called')
+# @app.route('/stripe_webhook', methods=['POST'])
+# def stripe_webhook():
+#     print('WEBHOOK called')
 
-    payload = request.data
-    sig_header = request.headers['STRIPE_SIGNATURE']
-    endpoint_secret = 'whsec_4f0cc54f25624e4d83038964f7e3a97bb0975878bdfcab0c9ca14d4cf75bbc03'
-    event = None
+#     payload = request.data
+#     sig_header = request.headers['STRIPE_SIGNATURE']
+#     endpoint_secret = 'whsec_4f0cc54f25624e4d83038964f7e3a97bb0975878bdfcab0c9ca14d4cf75bbc03'
+#     event = None
 
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret
-        )
-    except ValueError as e:
-        # Invalid payload
-        print('INVALID')
-        return {}, 400
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        print('INVALID SIGNATURE')
-        return {}, 400
+#     try:
+#         event = stripe.Webhook.construct_event(
+#             payload, sig_header, endpoint_secret
+#         )
+#     except ValueError as e:
+#         # Invalid payload
+#         print('INVALID')
+#         return {}, 400
+#     except stripe.error.SignatureVerificationError as e:
+#         # Invalid signature
+#         print('INVALID SIGNATURE')
+#         return {}, 400
 
-    # Handle the event
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-        print(session)
-    print('HELLO')
-    return {}
+#     # Handle the event
+#     if event['type'] == 'checkout.session.completed':
+#         session = event['data']['object']
+#         print(session)
+#     print('HELLO')
+#     return {}
 
 if __name__== '__main__':
     app.run(port=5005, debug=True)
