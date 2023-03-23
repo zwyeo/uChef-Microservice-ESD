@@ -118,6 +118,10 @@
             />
             <button type="button" @click="checkout()" class="btn btn-primary">
               Checkout Now
+              <span
+                v-if="loading"
+                class="spinner-border spinner-border-sm btn-spin"
+              ></span>
             </button>
           </div>
         </div>
@@ -210,6 +214,7 @@ export default {
   },
   methods: {
     checkout() {
+      this.loading = true;
       const orders = JSON.parse(JSON.stringify(this.order_info.order));
       const orderDict = { order: orders };
       // console.log({ orders: this.order_info.order });
@@ -228,6 +233,7 @@ export default {
   watch: {
     sessionId(newSession, oldSession) {
       this.$refs.checkoutRef.redirectToCheckout();
+      this.loading = false;
     },
   },
 };
