@@ -1,15 +1,24 @@
 <template>
-  <h1 class="text-center mt-5">Order page</h1>
+  <div v-if="supermarket == 'Cold Storage'">
+    <div class="text-center my-3">
+      <img src="../assets/cold_storage.png" alt="" class="w-25" />
+    </div>
+  </div>
+  <div v-if="supermarket == 'fairprice'">
+    <div class="text-center my-3">
+      <img src="../assets/fairprice.png" alt="" class="w-25" />
+    </div>
+  </div>
+  <!-- <div v-if="supermarket == null">
+    <h1>ROUTE TO ERROR</h1>
+  </div> -->
 
   <div class="container mx-auto row">
-    <div
-      v-for="ingredient in ingredient_list"
-      :key="ingredient"
-      class="col-sm-6"
-    >
+    <div v-for="order in order_info.order" :key="order.item" class="col-sm-6">
       <ingredient-card
         class="text-center mx-5 my-3"
-        :ing="ingredient"
+        :ing="order.item"
+        :price="order.price"
       ></ingredient-card>
     </div>
   </div>
@@ -23,7 +32,7 @@
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
     >
-      Deliver Now!
+      Confirm Cart
     </button>
   </div>
 
@@ -57,9 +66,15 @@
             <div>Qty:1</div>
           </div> -->
           <table class="table table-striped-columns">
-            <tr v-for="ingredient in ingredient_list" :key="ingredient">
-              <td class="fw-bold ms-2">{{ ingredient }}</td>
+            <tr v-for="order in order_info.order" :key="order.item">
+              <td class="fw-bold">{{ order.item }}</td>
               <td>Qty:1</td>
+              <td>${{ order.price }}</td>
+            </tr>
+            <tr>
+              <th class="text-success lead fw-bold">Total Price</th>
+              <td></td>
+              <th class="text-success lead fw-bold">${{ total_price }}</th>
             </tr>
           </table>
 
@@ -95,12 +110,8 @@
           >
             Close
           </button>
-          <button
-            type="button"
-            @click="connectSupermarket()"
-            class="btn btn-primary"
-          >
-            Connect to Supermarket!
+          <button type="button" @click="checkout()" class="btn btn-primary">
+            Checkout Now
           </button>
         </div>
       </div>
@@ -120,6 +131,9 @@ export default {
   data() {
     return {
       ingredient_list: [],
+      order_info: {},
+      supermarket: null,
+      total_price: null,
     };
   },
   created() {
@@ -155,33 +169,32 @@ export default {
         if (word_arr[i] === "") {
           word_arr.splice(i, 1);
         }
+        if (filter_words.includes(word_arr[i])) {
+          word_arr.splice(i, 1);
+        }
       }
       const str = word_arr.join(" ");
       ingredientName.push(str);
       this.ingredient_list = ingredientName;
     });
-    this.$store.state.ingredient_list = ingredientName;
+    this.$store.state.ingredient_list = this.ingredient_list = ingredientName;
+    // console.log(this.ingredient_list);
+
+    // Connect to the supermarket API and get the order info
+    axios
+      .post("http://127.0.0.1:5002/order", {
+        items: this.ingredient_list,
+      })
+      .then((res) => {
+        this.order_info = res.data;
+        console.log(this.order_info);
+        this.supermarket = res.data.supermarket;
+        this.total_price = res.data.totalprice;
+      })
+      .catch((err) => console.log(err));
   },
   methods: {
-    connectSupermarket() {
-      // talk to the backend
-      // pass the ingredients data to the backend
-      // **backend will check which supermarket to use (FP or CS)
-      // **backend will return the supermarket and the price of each ingredient
-      // ** backend will return stock status
-      // if got stock, then return supermarket and price
-      // if no stock, error handling from error microservice
-      // With the price data, will route to another page (Payment) for customer to confirm payment
-
-      // ---
-      // axios post the ingredients_list data to order microservice
-      axios
-        .post("http://127.0.0.1:5002/order", {
-          items: this.ingredient_list,
-        })
-        .then(console.log("posting"))
-        .catch((err) => console.log(err));
-    },
+    checkout() {},
   },
 };
 </script>

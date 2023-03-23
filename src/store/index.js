@@ -43,6 +43,7 @@ export default createStore({
     commsearched: false,
     commsearchrecipes: {},
     ingredient_list: [],
+    orderList: [],
   },
   mutations: {
     getRecipes(state, payload) {

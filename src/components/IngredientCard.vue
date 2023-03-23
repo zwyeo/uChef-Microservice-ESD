@@ -6,7 +6,7 @@
         class="ingredient-img my-2 mx-2"
       />
       {{ ing }}
-      <p>[Show FP logo and price]</p>
+      <p>Price: ${{ price }}</p>
     </div>
 
     <div class="d-flex justify-content-center">
@@ -29,7 +29,7 @@ export default {
       qty: 1,
     };
   },
-  props: ["ing"],
+  props: ["ing", "price"],
   methods: {
     increaseQty() {
       this.qty++;
