@@ -111,15 +111,15 @@
             Close
           </button>
           <div>
-    <stripe-checkout
-      ref="checkoutRef"
-      :pk="publishableKey"
-      :session-id="sessionId"
-    />
-          <button type="button" @click="checkout()" class="btn btn-primary">
-            Checkout Now
-          </button>
-        </div>
+            <stripe-checkout
+              ref="checkoutRef"
+              :pk="publishableKey"
+              :session-id="sessionId"
+            />
+            <button type="button" @click="checkout()" class="btn btn-primary">
+              Checkout Now
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -128,25 +128,26 @@
 
 <script>
 import axios from "axios";
-import { StripeCheckout } from '@vue-stripe/vue-stripe';
+import { StripeCheckout } from "@vue-stripe/vue-stripe";
 import IngredientCard from "../components/IngredientCard.vue";
 
 export default {
   name: "Order",
   components: {
     IngredientCard,
-    StripeCheckout
+    StripeCheckout,
   },
   props: ["id"],
   data() {
-    this.publishableKey ='pk_test_51MmDHTHHejWNjfqntLejqcMX51NluqXRdlSjEjvITvO2J14WdSXuxZVuv7Ftus56wnevZCTbchpqXXRwCNz8pxKZ00Xw45r97j';
+    this.publishableKey =
+      "pk_test_51MmDHTHHejWNjfqntLejqcMX51NluqXRdlSjEjvITvO2J14WdSXuxZVuv7Ftus56wnevZCTbchpqXXRwCNz8pxKZ00Xw45r97j";
     return {
       ingredient_list: [],
       order_info: {},
       supermarket: null,
       total_price: null,
       loading: false,
-      sessionId: null
+      sessionId: null,
     };
   },
 
@@ -206,22 +207,28 @@ export default {
         this.total_price = res.data.totalprice;
       })
       .catch((err) => console.log(err));
-
-      axios.get('http://127.0.0.1:5005/create-checkout-session')
-      .then(response => {
-        this.sessionId= response.data.sessionId
-    
-  })
-  .catch(error => {
-    console.log(error);
-  });
-      
-    
   },
   methods: {
-    checkout(){
-    this.$refs.checkoutRef.redirectToCheckout();
-    }
+    checkout() {
+      const orders = JSON.parse(JSON.stringify(this.order_info.order));
+      const orderDict = { order: orders };
+      // console.log({ orders: this.order_info.order });
+      axios
+        .post("http://127.0.0.1:5005/create-checkout-session", orderDict)
+        .then((response) => {
+          console.log(response);
+          this.sessionId = response.data.sessionId;
+          // console.log(this.sessionId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  watch: {
+    sessionId(newSession, oldSession) {
+      this.$refs.checkoutRef.redirectToCheckout();
+    },
   },
 };
 </script>
