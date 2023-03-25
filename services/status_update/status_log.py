@@ -9,7 +9,7 @@ import os
 import amqp_setup
 import fcm_send_push as fcm_pusher
 
-monitorBindingKey='#'
+monitorBindingKey='*.status'
 
 def receiveStatusLog():
     amqp_setup.check_setup()
@@ -27,7 +27,7 @@ def callback(channel, method, properties, body): # required signature for the ca
     processStatusLog(body_dict)
 
     fcm_pusher.sendPush("System Notification", "Order Update for order ID: {}, status: {}".format(body_dict['orderID'],body_dict['message']))
-
+    
     print() # print a new line feed
 
 def processStatusLog(status):
