@@ -4,14 +4,14 @@
       <img src="../assets/cold_storage.png" alt="" class="w-25" />
     </div>
   </div>
-  <div v-if="supermarket == 'fairprice'">
+  <div v-if="supermarket == 'Fairprice'">
     <div class="text-center my-3">
       <img src="../assets/fairprice.png" alt="" class="w-25" />
     </div>
   </div>
-  <!-- <div v-if="supermarket == null">
+  <div v-if="success == false">
     <h1>ROUTE TO ERROR</h1>
-  </div> -->
+  </div>
 
   <div class="container mx-auto row">
     <div v-for="order in order_info.order" :key="order.item" class="col-sm-6">
@@ -25,7 +25,18 @@
 
   <!-- Modal component to checkout -->
   <!-- Button trigger modal -->
-  <div class="text-center">
+  <div v-if="supermarket == 'Cold Storage'" class="text-center">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg my-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Confirm Cart
+    </button>
+  </div>
+
+  <div v-if="supermarket == 'Fairprice'" class="text-center">
     <button
       type="button"
       class="btn btn-primary btn-lg my-3"
@@ -152,6 +163,7 @@ export default {
       total_price: null,
       loading: false,
       sessionId: null,
+      success: null,
     };
   },
 
@@ -165,8 +177,11 @@ export default {
       "tbs",
       "cup",
       "tsp",
+      "tbsp",
       "1/2",
+      "1/3",
       "1/4",
+      "1/8",
       "cups",
       "oz",
       "100g",
@@ -174,6 +189,7 @@ export default {
       "500g",
       "bunch",
       "cloves",
+      "Large",
     ];
 
     this.ingredient_list.forEach((ing) => {
@@ -197,7 +213,7 @@ export default {
       this.ingredient_list = ingredientName;
     });
     this.$store.state.ingredient_list = this.ingredient_list = ingredientName;
-    // console.log(this.ingredient_list);
+    console.log(this.ingredient_list, "These are the ingredients");
 
     // Connect to the supermarket API and get the order info
     axios
@@ -208,7 +224,10 @@ export default {
         this.order_info = res.data;
         console.log(this.order_info);
         this.supermarket = res.data.supermarket;
-        this.total_price = res.data.totalprice;
+
+        this.total_price = res.data.totalprice.toFixed(2);
+
+        this.success = res.data.success;
       })
       .catch((err) => console.log(err));
   },
