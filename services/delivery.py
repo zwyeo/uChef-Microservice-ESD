@@ -45,7 +45,7 @@ def place_delivery():
     order_result = order_call.json()
     print('order_result:', order_result['success'])
 
-
+    
     return jsonify(order_result)
 
 
