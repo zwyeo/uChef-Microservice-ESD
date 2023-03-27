@@ -15,7 +15,7 @@ def updateDatabase(order_dict):
 
     print("# sending to firebase update for order no. " + order_dict['orderID'])
 
-    requests.get(db_url)
-    status = requests.post(db_url, json=json.dumps(order_dict))
-    print(status)
+    status = requests.put(db_url, json=json.dumps(order_dict))
+    
+    print(status.text)
     # print(f"Order {order_dict['orderID']} updated successfully.")
