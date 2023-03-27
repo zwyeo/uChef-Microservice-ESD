@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template, url_for, jsonify
+from flask import Flask, redirect, request, render_template, url_for, jsonify,session
 from flask_cors import CORS
 import stripe
 import os
@@ -60,33 +60,45 @@ def create_checkout_session():
 
 
 # WEBHOOK -> send success status after user has completed payment
-@app.route('/stripe_webhook', methods=['POST'])
-def stripe_webhook():
-    print('WEBHOOK called')
+# @app.route('/stripe_webhook', methods=['POST'])
+# def stripe_webhook():
+#     print('WEBHOOK called')
 
-    payload = request.data
-    sig_header = request.headers['STRIPE_SIGNATURE']
-    endpoint_secret = 'whsec_4f0cc54f25624e4d83038964f7e3a97bb0975878bdfcab0c9ca14d4cf75bbc03'
-    event = None
+#     payload = request.data
+#     sig_header = request.headers['STRIPE_SIGNATURE']
+#     endpoint_secret = 'whsec_4f0cc54f25624e4d83038964f7e3a97bb0975878bdfcab0c9ca14d4cf75bbc03'
+#     event = None
 
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret
-        )
-    except ValueError as e:
-        # Invalid payload
-        print('INVALID')
-        return {}, 400
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        print('INVALID SIGNATURE')
-        return {}, 400
+#     try:
+#         event = stripe.Webhook.construct_event(
+#             payload, sig_header, endpoint_secret
+#         )
+#     except ValueError as e:
+#         # Invalid payload
+#         print('INVALID')
+#         return {}, 400
+#     except stripe.error.SignatureVerificationError as e:
+#         # Invalid signature
+#         print('INVALID SIGNATURE')
+#         return {}, 400
 
-    # Handle the event
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-        print(session)
-    print('HELLO')
-    return {}
+#     # Handle the event
+#     if event['type'] == 'checkout.session.completed':
+
+#         session = event['data']
+#         email = session['object']['customer_details']['email']
+        
+#         #  2. Invoke the notification microservice
+#         # print('\n-----Invoking notification microservice-----')
+#         # notification_call = requests.post(notification_URL, json=email)
+#         # notification_result = notification_call.json()
+#         # print('notification_result:', notification_result['success'])
+#         print(session)
+#         print(email)
+        
+#         # return jsonify(order_result)
+  
+#     return {}
+
 if __name__== '__main__':
     app.run(port=5005, debug=True)

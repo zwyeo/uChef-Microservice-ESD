@@ -1,13 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 import stripe
-import os, sys
-
 import requests
+from flask_session import Session
 # from invokes import invoke_http
 
 app = Flask(__name__)
+# Configure the app to use sessions
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 CORS(app)
+
+stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9'
+app.secret_key = 'test'
 
 order_URL = "http://localhost:5002/order"
 fairprice_URL = "http://localhost:5003/supermarketStock"
@@ -20,30 +25,18 @@ orderStatus_URL = "http://localhost:5009/orderStatus"
 
 @app.route('/delivery', methods=['POST'])
 def place_delivery():
-    # data = request.get_json()
-    in_data = {
-   "items":[
-      "Beef",
-      "Vegetable Oil",
-      "Cinnamon Stick",
-      "Cloves",
-      "Star Anise",
-      "Cardamom",
-      "Coconut Cream",
-      "Water",
-      "Tamarind Paste",
-      "Lime",
-      "Sugar",
-      "Challots"
-   ]
-}
+    data = request.get_json()
+  
 
-    
+
     # 1. Invoke the order microservice
     print('\n-----Invoking order microservice-----')
-    order_call = requests.post(order_URL, json=in_data)
+    order_call = requests.post(order_URL, json=data)
     order_result = order_call.json()
     print('order_result:', order_result['success'])
+    # print(order_result['totalprice'])
+    session['totalprice'] = order_result['totalprice']
+    print(session.get('totalprice'))
 
     
     return jsonify(order_result)
@@ -76,15 +69,17 @@ def stripe_webhook():
     # Handle the event
     if event['type'] == 'checkout.session.completed':
 
-        session = event['data']['object']
-        email = session['customer_details']['email']
+        checkout_session = event['data']
+        email = checkout_session['object']['customer_details']['email']
         
         #  2. Invoke the notification microservice
-        print('\n-----Invoking notification microservice-----')
-        notification_call = requests.post(notification_URL, json=email)
-        notification_result = notification_call.json()
-        print('notification_result:', notification_result['success'])
-        
+        # print('\n-----Invoking notification microservice-----')
+        # notification_call = requests.post(notification_URL, json=email)
+        # notification_result = notification_call.json()
+        # print('notification_result:', notification_result['success'])
+        session = stripe.checkout.Session.list(limit=1)
+        # amount_total = session['amount_total']
+        print(session['data'][0]['amount_total'])
         print(email)
         # return jsonify(order_result)
   
