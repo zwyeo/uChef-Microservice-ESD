@@ -52,6 +52,18 @@ def create_checkout_session():
                 payment_method_types=["card"],
                 mode="payment",
                 line_items=line_items,
+                custom_fields=[
+                        {
+                        "key": "address",
+                        "label": {"type": "custom", "custom": "Street Address"},
+                        "type": "text",
+                        },
+                        {
+                        "key": "postalcode",
+                        "label": {"type": "custom", "custom": "Postal Code"},
+                        "type": "text",
+                        }
+                    ],
                 
             )
             return jsonify({"sessionId": checkout_session["id"]})

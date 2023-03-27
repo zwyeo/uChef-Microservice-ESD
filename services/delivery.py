@@ -69,19 +69,21 @@ def stripe_webhook():
     # Handle the event
     if event['type'] == 'checkout.session.completed':
 
-        checkout_session = event['data']
-        email = checkout_session['object']['customer_details']['email']
-        
-        #  2. Invoke the notification microservice
-        # print('\n-----Invoking notification microservice-----')
-        # notification_call = requests.post(notification_URL, json=email)
-        # notification_result = notification_call.json()
-        # print('notification_result:', notification_result['success'])
+        # checkout_session = event['data']
+        # email = checkout_session['object']['customer_details']['email']
         session = stripe.checkout.Session.list(limit=1)
-        # amount_total = session['amount_total']
+        email = session['data'][0]['customer_details']['email']
+        address = session['data'][0]['custom_fields'][0]['text']['value']
+        postal_code = session['data'][0]['custom_fields'][1]['text']['value']
         print(session['data'][0]['amount_total'])
         print(email)
-        # return jsonify(order_result)
+
+        #  2. Invoke the notification microservice
+        print('\n-----Invoking notification microservice-----')
+        notification_call = requests.post(notification_URL, json=email)
+        notification_result = notification_call.json()
+        print('notification_result:', notification_result['success'])
+        return jsonify(order_result)
   
     return {}
 
