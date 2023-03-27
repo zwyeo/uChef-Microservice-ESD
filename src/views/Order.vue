@@ -15,45 +15,25 @@
 
   <div class="container mx-auto row">
     <div v-for="order in order_info.order" :key="order.item" class="col-sm-6">
-      <ingredient-card
-        class="text-center mx-5 my-3"
-        :ing="order.item"
-        :price="order.price"
-      ></ingredient-card>
+      <ingredient-card class="text-center mx-5 my-3" :ing="order.item" :price="order.price"></ingredient-card>
     </div>
   </div>
 
   <!-- Modal component to checkout -->
   <!-- Button trigger modal -->
   <div class="text-center">
-    <button
-      type="button"
-      class="btn btn-primary btn-lg my-3"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
+    <button type="button" class="btn btn-primary btn-lg my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Confirm Cart
     </button>
   </div>
 
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cart</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <h3>Ingredient list</h3>
@@ -82,46 +62,23 @@
           <form>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Address</label>
-              <input
-                type="text"
-                class="form-control mb-2"
-                placeholder="Street Address"
-              />
+              <input type="text" class="form-control mb-2" placeholder="Street Address" />
               <div class="d-flex">
-                <input
-                  type="text"
-                  class="form-control mb-2"
-                  placeholder="City"
-                />
-                <input
-                  type="number"
-                  class="form-control mb-2"
-                  placeholder="Postal Code"
-                />
+                <input type="text" class="form-control mb-2" placeholder="City" />
+                <input type="number" class="form-control mb-2" placeholder="Postal Code" />
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
           <div>
-            <stripe-checkout
-              ref="checkoutRef"
-              :pk="publishableKey"
-              :session-id="sessionId"
-            />
+            <stripe-checkout ref="checkoutRef" :pk="publishableKey" :session-id="sessionId" />
             <button type="button" @click="checkout()" class="btn btn-primary">
               Checkout Now
-              <span
-                v-if="loading"
-                class="spinner-border spinner-border-sm btn-spin"
-              ></span>
+              <span v-if="loading" class="spinner-border spinner-border-sm btn-spin"></span>
             </button>
           </div>
         </div>
@@ -201,7 +158,7 @@ export default {
 
     // Connect to the supermarket API and get the order info
     axios
-      .post("http://127.0.0.1:5002/order", {
+      .post("http://127.0.0.1:5001/delivery", {
         items: this.ingredient_list,
       })
       .then((res) => {
