@@ -7,9 +7,10 @@ import json
 import os
 
 import amqp_setup
-import fcm_send_push as fcm_pusher
+import fcm_cloud_messaging as fcm_pusher
+# import delivery_status_firebase as db
 
-monitorBindingKey='#'
+monitorBindingKey='*.status'
 
 def receiveStatusLog():
     amqp_setup.check_setup()
@@ -27,6 +28,7 @@ def callback(channel, method, properties, body): # required signature for the ca
     processStatusLog(body_dict)
 
     fcm_pusher.sendPush("System Notification", "Order Update for order ID: {}, status: {}".format(body_dict['orderID'],body_dict['message']))
+    # db.updateDatabase(body_dict)
 
     print() # print a new line feed
 

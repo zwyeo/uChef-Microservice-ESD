@@ -37,6 +37,8 @@ def place_delivery():
     # print(order_result['totalprice'])
     session['totalprice'] = order_result['totalprice']
     print(session.get('totalprice'))
+
+    
     return jsonify(order_result)
 
 
