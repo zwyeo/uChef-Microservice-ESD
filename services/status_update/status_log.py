@@ -7,8 +7,9 @@ import json
 import os
 
 import amqp_setup
+import firebase_setup as setup
 import fcm_cloud_messaging as fcm_pusher
-# import delivery_status_firebase as db
+import delivery_status_firebase as db
 
 monitorBindingKey='*.status'
 
@@ -28,7 +29,7 @@ def callback(channel, method, properties, body): # required signature for the ca
     processStatusLog(body_dict)
 
     fcm_pusher.sendPush("System Notification", "Order Update for order ID: {}, status: {}".format(body_dict['orderID'],body_dict['message']))
-    # db.updateDatabase(body_dict)
+    db.updateDatabase(body_dict)
 
     print() # print a new line feed
 
@@ -38,6 +39,8 @@ def processStatusLog(status):
 
 
 if __name__ == "__main__":  # execute this program only if it is run as a script (not by 'import')
+    setup.start()
+
     print("\nThis is " + os.path.basename(__file__), end='')
     print(": monitoring routing key '{}' in exchange '{}' ...".format(monitorBindingKey, amqp_setup.exchangename))
     receiveStatusLog()

@@ -7,8 +7,6 @@ from firebase_admin import credentials, messaging, db
 # replace this path with the actual path for serviceAccountKey.json
 # right click serviceAccountKey.json in VSCode and click on copy path, then paste it into the path below
 # e.g. cred = credentials.Certificate("/Users/douglastoh99/Documents/GitHub/uChef-Microservice-ESD/services/notification/serviceAccountKey.json")
-cred = credentials.Certificate("/Users/douglastoh99/Documents/GitHub/uChef-Microservice-ESD/services/status_update/serviceAccountKey.json")
-firebase_admin.initialize_app(cred, {'databaseURL':'https://uchef-9f3e5.firebaseio.com/'})
 
 # token will need to be taken from Android application
 # the application we built on Android Studio will automatically generate and log the token into console everytime we run the app

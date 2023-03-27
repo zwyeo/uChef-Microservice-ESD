@@ -46,7 +46,7 @@ channel.queue_declare(queue=queue_name, durable=True)
     # 'durable' makes the queue survive broker restarts
 
 #bind Status queue
-channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='#') 
+channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.status') 
     # bind the queue to the exchange via the key
     # 'routing_key=#' => any routing_key would be matched
     
