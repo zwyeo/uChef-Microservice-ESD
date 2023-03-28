@@ -2,6 +2,8 @@
 # The above shebang (#!) operator tells Unix-like environments
 # to run this file as a python3 script
 # monitor status log queue in rabbitMQ
+# pushes status log to firebase cloud messaging to be sent as push notification to API endpoint
+# push status as json object to firebase realtime database
 
 import json
 import os
