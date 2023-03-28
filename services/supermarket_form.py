@@ -20,9 +20,13 @@ def postStatusUpdate():
   try:
     orderID = request.form['orderID']
     message = request.form['message']
+    price = request.form['price']
+    eta = request.form['eta']
     message_dict = {
       "orderID": orderID,
       "message": message,
+      "price": '$' + price,
+      "eta": eta,
       "time": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     }
     message = json.dumps(message_dict)
