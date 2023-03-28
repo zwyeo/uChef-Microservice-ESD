@@ -1,8 +1,7 @@
 # firebase cloud messaging setup file
 # DONT EDIT UNLESS NECESSARY
 
-import firebase_admin
-from firebase_admin import credentials, messaging, db
+from firebase_admin import messaging
 
 # replace this path with the actual path for serviceAccountKey.json
 # right click serviceAccountKey.json in VSCode and click on copy path, then paste it into the path below

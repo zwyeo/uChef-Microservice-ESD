@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, messaging, db
+from firebase_admin import credentials, db
 
 cred = credentials.Certificate("serviceAccountKey.json")
 
