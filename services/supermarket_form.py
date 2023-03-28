@@ -6,6 +6,7 @@ from flask_cors import CORS
 import amqp_setup
 import pika
 import json
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +22,8 @@ def postStatusUpdate():
     message = request.form['message']
     message_dict = {
       "orderID": orderID,
-      "message": message
+      "message": message,
+      "time": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     }
     message = json.dumps(message_dict)
 
