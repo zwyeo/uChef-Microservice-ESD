@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import stripe
 import requests
-
+import amqp_setup
+import pika
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +27,10 @@ def place_delivery():
     print('\n-----Invoking order microservice-----')
     order_call = requests.post(order_URL, json=data)
     order_result = order_call.json()
+
+    if order_result['success']:
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="error", properties=pika.BasicProperties(delivery_mode = 2))
+
     print('order_result:', order_result['success'])
 
     
