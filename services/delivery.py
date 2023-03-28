@@ -75,15 +75,22 @@ def stripe_webhook():
         email = session['data'][0]['customer_details']['email']
         address = session['data'][0]['custom_fields'][0]['text']['value']
         postal_code = session['data'][0]['custom_fields'][1]['text']['value']
-        print(session['data'][0]['amount_total'])
-        print(email)
+        amount = session['data'][0]['amount_total']
+        price = "$" + str("{:.2f}".format(amount/100))
+        # print(session['data'][0]['amount_total'])
+        # print(email)
+        data = {
+            'price': price,
+            'email': email,
+            'street_address': address,
+            'postal_code': postal_code,
+        }
 
         #  2. Invoke the notification microservice
         print('\n-----Invoking notification microservice-----')
-        notification_call = requests.post(notification_URL, json=email)
-        notification_result = notification_call.json()
-        print('notification_result:', notification_result['success'])
-        return jsonify(order_result)
+        notification_call = requests.post(notification_URL, json=data)
+        print(notification_call.json())
+        return {}
   
     return {}
 

@@ -1,31 +1,28 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import boto3
 from botocore.exceptions import ClientError
 import json
 
 app = Flask(__name__)
 
-@app.route('/send_email', methods=['POST'])
+@app.route('/notification', methods=['POST'])
 def send_email():
     # Get input data from JSON object
-    data = {
-        "payment_details": [{
-            "payment_id": "14",
-            "price": 454.95
-        }],
-        "email": "joseph.ho.2021@scis.smu.edu.sg",
-        "delivery_address": "55 Rocky Road"
-    }
-    payment_details = data['payment_details']
+    if request.method == 'POST':
+        data = request.get_json()
+    print(data)
+    price = data['price']
     email = data['email']
-    delivery_address = data['delivery_address']
+    street_address = data['street_address']
+    postal_code = data['postal_code']
+    delivery_address = street_address + " " + postal_code
 
     # Create a new SES client
     ses = boto3.client('ses',  aws_access_key_id='AKIAVFEET5SMSLP36BYB',
                    aws_secret_access_key="f6wOJ84/W+8qyUxAasZfnIVcJusVyYr2Led9RJaz", region_name='ap-southeast-1')
 
     # Create the message body
-    message_body = f"Hello,\n\nHere are your payment details:\n\nPayment ID: {payment_details[0]['payment_id']}\nPrice: {payment_details[0]['price']}\n\nDelivery Address: {delivery_address}"
+    message_body = f"Hello,\n\nHere are your payment details:\n\nPrice: {price}\n\nDelivery Address: {delivery_address}"
 
     # Try to send the email
     try:
@@ -49,10 +46,11 @@ def send_email():
                 }
             }
         )
-        return "Email sent successfully"
+        return jsonify({"code": 200, "data": 'OK. Email sent successfully.'}), 200
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return "Error sending email"
+        return jsonify({"code": 400, "message": "Email failed to send. Please try again"}), 400
+    
 
 if __name__ == '__main__':
-    app.run(port=5088, debug=True)
+    app.run(port=5006, debug=True)
