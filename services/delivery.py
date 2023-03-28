@@ -1,18 +1,13 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import stripe
 import requests
-from flask_session import Session
-# from invokes import invoke_http
+
 
 app = Flask(__name__)
-# Configure the app to use sessions
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
 CORS(app)
 
 stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9'
-app.secret_key = 'test'
 
 order_URL = "http://localhost:5002/order"
 fairprice_URL = "http://localhost:5003/supermarketStock"
@@ -27,16 +22,11 @@ orderStatus_URL = "http://localhost:5009/orderStatus"
 def place_delivery():
     data = request.get_json()
   
-
-
     # 1. Invoke the order microservice
     print('\n-----Invoking order microservice-----')
     order_call = requests.post(order_URL, json=data)
     order_result = order_call.json()
     print('order_result:', order_result['success'])
-    # print(order_result['totalprice'])
-    session['totalprice'] = order_result['totalprice']
-    print(session.get('totalprice'))
 
     
     return jsonify(order_result)
