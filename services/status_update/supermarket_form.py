@@ -12,7 +12,7 @@ CORS(app)
 
 @app.route("/")
 def index():
-  return render_template("fairprice.html")
+  return render_template("deliveryStatus.html")
 
 @app.route("/postStatusUpdate", methods=['GET', 'POST'])
 def postStatusUpdate():
