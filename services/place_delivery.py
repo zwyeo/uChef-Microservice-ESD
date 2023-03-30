@@ -28,8 +28,8 @@ def place_delivery():
     order_call = requests.post(order_URL, json=data)
     order_result = order_call.json()
 
-    if order_result['success']:
-        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="error", properties=pika.BasicProperties(delivery_mode = 2))
+    if order_result['success'] == False:
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="HELP LA NOT WORKING", properties=pika.BasicProperties(delivery_mode = 2))
 
     print('order_result:', order_result['success'])
 
