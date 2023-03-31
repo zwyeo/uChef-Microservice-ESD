@@ -11,7 +11,7 @@
         />
       </div>
     </div>
-    <div v-else class="row">
+    <div v-else class="row animate__animated animate__backInLeft animate__fast">
       <div class="d-flex justify-content-evenly mb-5">
         <div class=""><span class="fw-bold">OrderID: </span>{{ orderID }}</div>
         <div class="fw-bold">ETA: {{ eta }}</div>

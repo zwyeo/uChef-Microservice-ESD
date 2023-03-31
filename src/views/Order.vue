@@ -2,20 +2,29 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <div v-if="supermarket == 'Cold Storage'">
-      <div class="text-center my-3">
+      <div
+        class="text-center my-3"
+        animate__animated
+        animate__backInLeft
+        animate__fast
+      >
         <img src="../assets/cold_storage.png" alt="" class="w-25" />
       </div>
     </div>
     <div v-if="supermarket == 'Fairprice'">
-      <div class="text-center my-3">
+      <div
+        class="text-center my-3 animate__animated animate__backInLeft animate__fast"
+      >
         <img src="../assets/fairprice.png" alt="" class="w-25" />
       </div>
     </div>
     <div v-if="success == false">
-      <h1>Sorry. Both Fairprice and Cold Storage are out of stock.</h1>
+      <div class="my-3 animate__animated animate__backInLeft animate__fast">
+        <h1>Sorry. Both Fairprice and Cold Storage are out of stock.</h1>
+      </div>
     </div>
 
-    <div class="container mx-auto row">
+    <div class="container mx-auto row animate__animated animate__backInLeft">
       <div v-for="order in order_info.order" :key="order.item" class="col-sm-6">
         <ingredient-card
           class="text-center mx-5 my-3"
@@ -174,7 +183,7 @@ export default {
       total_price: null,
       loading: false,
       sessionId: null,
-      success: null,
+      success: false,
       isStripe: null,
       categorySelected: null,
     };
@@ -237,7 +246,7 @@ export default {
       })
       .then((res) => {
         this.order_info = res.data;
-        console.log(this.order_info);
+        console.log(this.order_info, "this is the returned data!!");
         this.supermarket = res.data.supermarket;
         if (res.data.totalprice != null) {
           this.total_price = res.data.totalprice.toFixed(2);
