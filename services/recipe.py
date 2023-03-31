@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import requests
 
 app = Flask(__name__)
 
@@ -19,7 +20,9 @@ ref = db.reference('meals')
 
 
 def get_recipes():
-    category = "Beef"
+    # category = "Beef"
+    data1 = request.get_json()
+    category = data1['category']
     new_arr = []
     data = ref.get()
     similar_recipes = filter_by_category(data, category)
