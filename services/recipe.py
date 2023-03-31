@@ -6,9 +6,9 @@ from firebase_admin import db
 app = Flask(__name__)
 
 # Initialize Firebase app
-cred = credentials.Certificate("serviceAccountKey.json")
+cred = credentials.Certificate("themealdb-5744c-firebase-adminsdk-8izv6-23da3eb002.json")
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    'databaseURL': 'https://themealdb-5744c-default-rtdb.asia-southeast1.firebasedatabase.app/'
 })
 
 # Get a reference to the database
