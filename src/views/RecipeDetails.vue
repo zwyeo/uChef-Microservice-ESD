@@ -420,7 +420,7 @@ export default {
     if (isNaN(this.id)) {
       axios
         .get(
-          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`
+          `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`
         )
         .then((response) => {
           // console.log(response.data)
@@ -494,6 +494,12 @@ export default {
             }
           }
         });
+      // Get category
+      axios
+        .get("https://themealdb.com/api/json/v1/1/lookup.php?i=" + this.id)
+        .then((res) => {
+          this.$store.state.category = res.data.meals[0].strCategory;
+        });
     }
 
     //to link active ingredient_list to store
@@ -524,7 +530,7 @@ export default {
     //Rating
     axios
       .get(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
+        `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
       )
       .then((response) => {
         if (response.data != null) {
@@ -556,7 +562,7 @@ export default {
     //Dictate the state of the bookmark button
     axios
       .get(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`
+        `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`
       )
       .then((response) => {
         // console.log(response.data)
@@ -572,7 +578,7 @@ export default {
       });
 
     //review card population
-    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    let rurl = `recipes/${this.id}/reviews.json`;
     axios.get(rurl).then((response) => {
       // console.log(response.data);
       let reviewsObj = response.data;
@@ -593,7 +599,7 @@ export default {
         window.location.assign("/login");
       } else {
         axios.post(
-          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
+          `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
           {
             title: this.title,
             image: this.image,
@@ -608,7 +614,7 @@ export default {
 
         axios
           .get(
-            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
+            `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
           )
           .then((response) => {
             // console.log(response.data);
@@ -644,7 +650,7 @@ export default {
       var str_id = null;
       axios
         .get(
-          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
+          `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
         )
         .then((response) => {
           // console.log(response.data);

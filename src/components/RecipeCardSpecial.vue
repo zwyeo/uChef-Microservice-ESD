@@ -96,7 +96,7 @@ export default {
     //Rating
     axios
       .get(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
+        `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
       )
       .then((response) => {
         if (response.data != null) {

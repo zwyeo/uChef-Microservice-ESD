@@ -180,7 +180,7 @@ export default {
         });
     },
     populateUserDB(uid) {
-      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}/preferences.json`;
+      const url = `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app//users/${uid}/preferences.json`;
 
       axios
         .post(url, {

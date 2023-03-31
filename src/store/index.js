@@ -20,6 +20,7 @@ export default createStore({
       "Vegan",
       "Vegetarian",
     ],
+    category: null,
     selectedCategory: "",
     queryParam: "",
     searchDesc: "Search food recipe",
@@ -152,7 +153,7 @@ export default createStore({
       } else if (this.state.setsearch == "community") {
         let commrecipes = [];
         let url =
-          "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
+          "https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
         axios.get(url).then((response) => {
           // console.log(response.data);
           let alldata = response.data;
@@ -201,7 +202,7 @@ export default createStore({
     // FOR SEARCHING COMMUNITY RECIPES
     getCommunityRecipeBySearch({ commit }) {
       const url =
-        "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
+        "https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
 
       axios.get(url).then((res) => {
         let commrecipes = [];
@@ -226,7 +227,7 @@ export default createStore({
 
     getCommunityRecipeByCategory({ commit }) {
       const url =
-        "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
+        "https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
 
       axios.get(url).then((res) => {
         let commrecipes = [];
@@ -304,7 +305,7 @@ export default createStore({
       let day = date.getDate();
       let formatdate = `${day} ${wordmonth} ${year}`;
       axios.post(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`,
+        `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`,
         {
           user: this.state.userName,
           rating: this.state.starrating,
@@ -326,7 +327,7 @@ export default createStore({
       //trying to use axios call to refresh page
       //review card population
       let review_list = [];
-      let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`;
+      let rurl = `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`;
       axios.get(rurl).then((response) => {
         // console.log(response.data);
         let reviewsObj = response.data;
@@ -343,14 +344,14 @@ export default createStore({
     },
 
     setPopularRecipe({ commit }) {
-      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/popularRecipe.json`;
+      const url = `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/popularRecipe.json`;
       axios.get(url).then((res) => {
         const data = res.data;
         commit("setPopularRecipe", data);
       });
     },
     setCommunityRecipe({ commit }) {
-      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`;
+      const url = `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`;
       axios.get(url).then((res) => {
         const data = res.data;
         commit("setCommunityRecipe", data);

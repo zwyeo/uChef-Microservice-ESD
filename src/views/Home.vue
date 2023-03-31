@@ -113,7 +113,7 @@ export default {
       var review_list = [];
       axios
         .get(
-          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
+          `https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
         )
         .then((response) => {
           var obj = response.data;

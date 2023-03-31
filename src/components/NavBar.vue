@@ -97,6 +97,20 @@
             >
           </router-link>
 
+          <!-- HOME NAV -->
+          <router-link to="/my-delivery"
+            ><a
+              v-if="this.$store.state.routeName == 'my-delivery'"
+              class="nav-link active px-3 text-muted"
+              aria-current="page"
+              p
+              >My Delivery</a
+            >
+            <a v-else class="nav-link px-3 text-muted" aria-current="page" p
+              >My Delivery</a
+            >
+          </router-link>
+
           <!-- INSERT -->
           <!-- SEARCH BAR -->
           <div
@@ -139,7 +153,10 @@
             style="color: #b6b6b6"
           >
             <i class="fa fa-user-plus"></i>
-            <span> LOGIN <br> / SIGN UP</span>
+            <span>
+              LOGIN <br />
+              / SIGN UP</span
+            >
           </div>
 
           <!-- PROFILE IF GUEST -->
@@ -161,7 +178,7 @@
             data-bs-toggle="modal"
             data-bs-target="#logoutModal"
             class="search-btn login-style ps-5 pt-2"
-            style="color: #b6b6b6; bottom: 4.75rem;"
+            style="color: #b6b6b6; bottom: 4.75rem"
           >
             <i class="fa fa-rotate-right"></i>
             <span> LOGOUT</span>

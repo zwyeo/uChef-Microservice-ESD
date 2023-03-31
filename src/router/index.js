@@ -10,6 +10,7 @@ import AddRecipePage from "../views/AddRecipePage.vue";
 import UpdateRecipePage from "../views/UpdateRecipePage.vue";
 import Order from "../views/Order.vue";
 import store from "@/store";
+import MyDelivery from "../views/MyDelivery.vue";
 
 import * as firebase from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -69,6 +70,11 @@ const routes = [
     name: "order",
     component: Order,
     props: true,
+  },
+  {
+    path: "/my-delivery",
+    name: "my-delivery",
+    component: MyDelivery,
   },
 ];
 
