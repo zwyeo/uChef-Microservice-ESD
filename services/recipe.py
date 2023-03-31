@@ -20,8 +20,19 @@ ref = db.reference('meals')
 
 def get_recipes():
     category = "Beef"
+    new_arr = []
     data = ref.get()
-    return filter_by_category(data, category)
+    similar_recipes = filter_by_category(data, category)
+    for d in similar_recipes:
+        meal_info = {
+            'strMeal': d.get('strMeal'),
+            'strMealThumb': d.get('strMealThumb'),
+            'idMeal': d.get('idMeal')
+        }
+        new_arr.append(meal_info)
+    return new_arr[0:6]
+
+
 
 def filter_by_category(arr, category):
     """
