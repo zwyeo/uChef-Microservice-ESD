@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
@@ -17,11 +17,10 @@ ref = db.reference('meals')
 
 # Define a route to retrieve data from Firebase
 @app.route('/recipes')
-
-
 def get_recipes():
     # category = "Beef"
-    data1 = request.get_json()
+    
+    data1= request.get_json()
     category = data1['category']
     new_arr = []
     data = ref.get()
@@ -44,4 +43,4 @@ def filter_by_category(arr, category):
     return [d for d in arr if d.get('strCategory') == category]
 
 if __name__ == '__main__':
-    app.run(port=5099, debug=True)
+    app.run(port=5009, debug=True)
