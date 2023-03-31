@@ -4,6 +4,7 @@ import stripe
 import requests
 import amqp_setup
 import pika
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +17,7 @@ coldStorage_URL = "http://localhost:5004/supermarketStock"
 payment_URL = "http://localhost:5005/payment"
 notification_URL = "http://localhost:5006/notification"
 error_URL = "http://localhost:5007/error"
-recipe_URL = "http://localhost:5008/recipe"
+recipe_URL = "http://localhost:5008/recipes"
 orderStatus_URL = "http://localhost:5009/orderStatus"
 
 @app.route('/delivery', methods=['POST'])
@@ -32,13 +33,13 @@ def place_delivery():
         #2. Invoke recipe microservice
         print('\n-----Invoking recipe microservice-----')
         category = {'category':data['category'] }
-        recipe_call = requests.post(recipe_URL, json=category)
+        recipe_call = requests.get(recipe_URL, json=category)
         recipe_result = recipe_call.json()
 
 
         # 3. Invoke error microservice 
         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="HELP LA NOT WORKING", properties=pika.BasicProperties(delivery_mode = 2))
-        
+        print(recipe_result)
         return jsonify(recipe_result)
     
     print('order_result:', order_result['success'])
