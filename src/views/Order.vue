@@ -233,6 +233,7 @@ export default {
       .post("http://127.0.0.1:5001/delivery", {
         items: this.ingredient_list,
         category: this.$store.state.category,
+        id: this.id,
       })
       .then((res) => {
         this.order_info = res.data;
