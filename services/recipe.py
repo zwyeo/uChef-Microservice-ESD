@@ -12,13 +12,14 @@ firebase_admin.initialize_app(cred, {
 })
 
 # Get a reference to the database
-ref = db.reference('popularRecipe')
+ref = db.reference('meals')
 
 # Define a route to retrieve data from Firebase
 @app.route('/recipes')
 def get_recipes():
     data = ref.get()
+    
     return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(port=5091, debug=True)
+    app.run(port=5099, debug=True)
