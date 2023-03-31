@@ -2,9 +2,11 @@ from flask import Flask, jsonify, request
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 
 # Initialize Firebase app
 cred = credentials.Certificate("themealdb-5744c-firebase-adminsdk-8izv6-23da3eb002.json")
@@ -16,21 +18,25 @@ firebase_admin.initialize_app(cred, {
 ref = db.reference('meals')
 
 # Define a route to retrieve data from Firebase
-@app.route('/recipes')
+@app.route('/recipes', methods=['GET','POST'])
 def get_recipes():
     # category = "Beef"
     
     data1= request.get_json()
+    print("IT WORKS TILL HERE")
+    print(data1)
     category = data1['category']
+    existingId = data1['id']
     new_arr = []
     data = ref.get()
     similar_recipes = filter_by_category(data, category)
     for d in similar_recipes:
-        meal_info = {
-            'strMeal': d.get('strMeal'),
-            'strMealThumb': d.get('strMealThumb'),
-            'idMeal': d.get('idMeal')
-        }
+        if(d.get('idMeal')!=existingId):
+            meal_info = {
+                'strMeal': d.get('strMeal'),
+                'strMealThumb': d.get('strMealThumb'),
+                'idMeal': d.get('idMeal')
+            }
         new_arr.append(meal_info)
     return new_arr[0:6]
 
