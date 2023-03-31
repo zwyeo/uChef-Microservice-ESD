@@ -16,10 +16,18 @@ ref = db.reference('meals')
 
 # Define a route to retrieve data from Firebase
 @app.route('/recipes')
+
+
 def get_recipes():
+    category = "Beef"
     data = ref.get()
-    
-    return jsonify(data)
+    return filter_by_category(data, category)
+
+def filter_by_category(arr, category):
+    """
+    Filters an array of dictionaries based on the 'strCategory' key matching a given category.
+    """
+    return [d for d in arr if d.get('strCategory') == category]
 
 if __name__ == '__main__':
     app.run(port=5099, debug=True)
