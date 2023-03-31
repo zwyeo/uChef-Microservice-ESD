@@ -17,11 +17,10 @@ ref = db.reference('meals')
 
 # Define a route to retrieve data from Firebase
 @app.route('/recipes')
-
-
 def get_recipes():
     # category = "Beef"
-    data1 = request.get_json()
+    
+    data1= request.get_json()
     category = data1['category']
     new_arr = []
     data = ref.get()
