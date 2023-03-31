@@ -32,8 +32,11 @@ def place_delivery():
     if order_result['success'] == False:
         #2. Invoke recipe microservice
         print('\n-----Invoking recipe microservice-----')
-        category = {'category':data['category'] }
-        recipe_call = requests.get(recipe_URL, json=category)
+        details = {
+                   'category':data['category'], 
+                   'id':data['id'] 
+                   }
+        recipe_call = requests.get(recipe_URL, json=details)
         recipe_result = recipe_call.json()
 
 
