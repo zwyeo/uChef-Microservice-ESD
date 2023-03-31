@@ -4,7 +4,7 @@ from firebase_admin import db
 import json
 
 def updateDatabase(order_dict):
-    db_url = "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/order/{}.json".format(order_dict['orderID'])
+    db_url = "https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/order/{}.json".format(order_dict['orderID'])
 
     print("# sending to firebase update for order no. " + order_dict['orderID'])
 

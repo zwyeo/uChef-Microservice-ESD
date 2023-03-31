@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Initialize Firebase app
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    'databaseURL': 'https://esd-uchef-restore-default-rtdb.asia-southeast1.firebasedatabase.app/'
 })
 
 # Get a reference to the database
