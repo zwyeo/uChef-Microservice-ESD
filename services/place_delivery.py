@@ -29,11 +29,19 @@ def place_delivery():
     order_result = order_call.json()
 
     if order_result['success'] == False:
-        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="HELP LA NOT WORKING", properties=pika.BasicProperties(delivery_mode = 2))
+        #2. Invoke recipe microservice
+        print('\n-----Invoking recipe microservice-----')
+        category = {'category':"Beef" }
+        recipe_call = requests.post(recipe_URL, json=category)
+        recipe_result = recipe_call.json()
 
+
+        # 3. Invoke error microservice 
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="HELP LA NOT WORKING", properties=pika.BasicProperties(delivery_mode = 2))
+        return jsonify(recipe_result)
+    
     print('order_result:', order_result['success'])
 
-    
     return jsonify(order_result)
 
 
