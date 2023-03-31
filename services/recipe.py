@@ -1,8 +1,8 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
-import requests
+
 
 app = Flask(__name__)
 
@@ -44,4 +44,4 @@ def filter_by_category(arr, category):
     return [d for d in arr if d.get('strCategory') == category]
 
 if __name__ == '__main__':
-    app.run(port=5099, debug=True)
+    app.run(port=5009, debug=True)
