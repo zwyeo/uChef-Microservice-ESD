@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost:3306/coldStorage'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@host.docker.internal:3306/coldStorage'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -154,4 +154,4 @@ def delete_stock(itemName):
   ), 404
 
 if __name__ == '__main__':
-    app.run(port=5004, debug=True)
+    app.run(host='0.0.0.0', port=5004, debug=True)
