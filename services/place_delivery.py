@@ -20,6 +20,8 @@ error_URL = "http://localhost:5007/error"
 recipe_URL = "http://localhost:5008/recipes"
 orderStatus_URL = "http://localhost:5009/orderStatus"
 
+
+# First process in getting the initial delivery order 
 @app.route('/delivery', methods=['POST'])
 def place_delivery():
     data = request.get_json()
@@ -50,7 +52,15 @@ def place_delivery():
     return jsonify(order_result)
 
 
-
+# Second process of front end requesting for stripe session ID 
+@app.route('/get_sessionid', methods=['POST'])
+def get_sessionid():
+        data = request.get_json()
+        # 1. Invoke the order microservice
+        print('\n-----Invoking payment microservice-----')
+        payment_call = requests.post(payment_URL, json=data)
+        payment_result = payment_call.json()
+        return(payment_result)
 
 @app.route('/stripe_webhook', methods=['POST'])
 def stripe_webhook():
