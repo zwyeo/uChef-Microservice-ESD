@@ -19,8 +19,36 @@
       </div>
     </div>
     <div v-if="success == false">
-      <div class="my-3 animate__animated animate__backInLeft animate__fast">
-        <h1>Sorry. Both Fairprice and Cold Storage are out of stock.</h1>
+      <div
+        class="my-3 text-center animate__animated animate__backInLeft animate__fast"
+      >
+        <h2>
+          Sorry. Both Fairprice and Cold Storage are out of stock of the items.
+        </h2>
+
+        <!-- RECOMMENDED FOR YOU SECTION -->
+        <h3 class="text-center p-5 mt-4">
+          You may try other recommended recipes below:
+        </h3>
+        <div class="row d-flex justify-content-center">
+          <div
+            v-for="recipe in recommendations"
+            :key="recipe.idMeal"
+            class="col-xl-4 col-md-6"
+          >
+            <router-link
+              :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+            >
+              <recipe-card
+                :title="recipe.strMeal"
+                :img="recipe.strMealThumb"
+                :id="recipe.idMeal"
+                class="mb-5"
+              >
+              </recipe-card>
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -156,7 +184,6 @@
       </div>
     </div>
   </div>
-  s
 </template>
 
 <script>
@@ -164,6 +191,7 @@ import axios from "axios";
 import { StripeCheckout } from "@vue-stripe/vue-stripe";
 import IngredientCard from "../components/IngredientCard.vue";
 import NavBar from "../components/NavBar.vue";
+import RecipeCard from "../components/RecipeCard.vue";
 
 export default {
   name: "Order",
@@ -171,6 +199,7 @@ export default {
     IngredientCard,
     StripeCheckout,
     NavBar,
+    RecipeCard,
   },
   props: ["id"],
   data() {
@@ -179,6 +208,7 @@ export default {
     return {
       ingredient_list: [],
       order_info: {},
+      recommendations: [],
       supermarket: null,
       total_price: null,
       loading: false,
@@ -247,12 +277,16 @@ export default {
       .then((res) => {
         this.order_info = res.data;
         console.log(this.order_info, "this is the returned data!!");
-        this.supermarket = res.data.supermarket;
-        if (res.data.totalprice != null) {
-          this.total_price = res.data.totalprice.toFixed(2);
-        }
+        if (res.data.success) {
+          this.supermarket = res.data.supermarket;
+          if (res.data.totalprice != null) {
+            this.total_price = res.data.totalprice.toFixed(2);
+          }
 
-        this.success = res.data.success;
+          this.success = res.data.success;
+        } else {
+          this.recommendations = res.data.recommended;
+        }
       })
       .catch((err) => console.log(err));
   },

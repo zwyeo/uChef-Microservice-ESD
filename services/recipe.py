@@ -38,7 +38,7 @@ def get_recipes():
                 'strMealThumb': d.get('strMealThumb'),
                 'idMeal': d.get('idMeal')
             }
-        new_arr.append(meal_info)
+            new_arr.append(meal_info)
     new_dict['success'] = False
     new_dict['recommended'] = new_arr[0:6]
     return new_dict
