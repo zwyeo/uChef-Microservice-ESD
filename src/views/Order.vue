@@ -129,32 +129,6 @@
                 <th class="text-success lead fw-bold">${{ total_price }}</th>
               </tr>
             </table>
-
-            <hr />
-            <form>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label"
-                  >Address</label
-                >
-                <input
-                  type="text"
-                  class="form-control mb-2"
-                  placeholder="Street Address"
-                />
-                <div class="d-flex">
-                  <input
-                    type="text"
-                    class="form-control mb-2"
-                    placeholder="City"
-                  />
-                  <input
-                    type="number"
-                    class="form-control mb-2"
-                    placeholder="Postal Code"
-                  />
-                </div>
-              </div>
-            </form>
           </div>
           <div class="modal-footer">
             <button
