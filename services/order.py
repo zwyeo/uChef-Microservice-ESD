@@ -7,7 +7,6 @@ CORS(app)
 
 fairprice_url = "http://localhost:5003/supermarketStock"
 coldstorage_url = "http://localhost:5004/supermarketStock"
-delivery_url = "http://localhost:5001/delivery"
 
 @app.route('/order', methods=['GET','POST'])
 def place_order():
