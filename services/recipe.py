@@ -28,6 +28,7 @@ def get_recipes():
     category = data1['category']
     existingId = data1['id']
     new_arr = []
+    new_dict = {}
     data = ref.get()
     similar_recipes = filter_by_category(data, category)
     for d in similar_recipes:
@@ -38,7 +39,9 @@ def get_recipes():
                 'idMeal': d.get('idMeal')
             }
         new_arr.append(meal_info)
-    return new_arr[0:6]
+    new_dict['success'] = False
+    new_dict['recommended'] = new_arr[0:6]
+    return new_dict
 
 
 
