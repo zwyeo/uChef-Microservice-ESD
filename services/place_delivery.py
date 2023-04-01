@@ -4,7 +4,6 @@ import stripe
 import requests
 import amqp_setup
 import pika
-import json
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +13,7 @@ stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdX
 order_URL = "http://localhost:5002/order"
 fairprice_URL = "http://localhost:5003/supermarketStock"
 coldStorage_URL = "http://localhost:5004/supermarketStock"
-payment_URL = "http://localhost:5005/payment"
+payment_URL = "http://localhost:5005/create-checkout-session"
 notification_URL = "http://localhost:5006/notification"
 error_URL = "http://localhost:5007/error"
 recipe_URL = "http://localhost:5008/recipes"
@@ -56,11 +55,13 @@ def place_delivery():
 @app.route('/get_sessionid', methods=['POST'])
 def get_sessionid():
         data = request.get_json()
-        # 1. Invoke the order microservice
+        # 1. Invoke the payment microservice
         print('\n-----Invoking payment microservice-----')
+
+        # Retrieve Session ID
         payment_call = requests.post(payment_URL, json=data)
         payment_result = payment_call.json()
-        return(payment_result)
+        return jsonify(payment_result)
 
 @app.route('/stripe_webhook', methods=['POST'])
 def stripe_webhook():
