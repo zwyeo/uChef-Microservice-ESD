@@ -9,13 +9,13 @@ CORS(app)
 stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9'
 
 
-@app.route('/')
-def checkout():
-   return render_template('checkout.html')
+# @app.route('/')
+# def checkout():
+#    return render_template('checkout.html')
 
-@app.route('/success')
-def thanks():
-   return render_template('success.html')
+# @app.route('/success')
+# def thanks():
+#    return render_template('success.html')
 
 @app.route("/create-checkout-session", methods=['GET', 'POST'])
 def create_checkout_session():
