@@ -11,14 +11,14 @@ CORS(app)
 
 stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9'
 
-order_URL = "http://localhost:5002/order"
-fairprice_URL = "http://localhost:5003/supermarketStock"
-coldStorage_URL = "http://localhost:5004/supermarketStock"
-payment_URL = "http://localhost:5005/payment"
-notification_URL = "http://localhost:5006/notification"
-error_URL = "http://localhost:5007/error"
-recipe_URL = "http://localhost:5008/recipes"
-orderStatus_URL = "http://localhost:5009/orderStatus"
+order_URL = "http://host.docker.internal:5002/order"
+fairprice_URL = "http://host.docker.internal:5003/supermarketStock"
+coldStorage_URL = "http://host.docker.internal:5004/supermarketStock"
+payment_URL = "http://host.docker.internal:5005/payment"
+notification_URL = "http://host.docker.internal:5006/notification"
+error_URL = "http://host.docker.internal:5007/error"
+recipe_URL = "http://host.docker.internal:5008/recipes"
+supermarketForm_URL = "http://host.docker.internal:5100/"
 
 
 # First process in getting the initial delivery order 
