@@ -43,9 +43,11 @@ def place_delivery():
         recipe_result = recipe_call.json()
 
 
-        # 3. Invoke error microservice 
-        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="HELP LA NOT WORKING", properties=pika.BasicProperties(delivery_mode = 2))
+        # 3. Invoke error microservice since there is error
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="Error: The items in the delivery order are out of stock", properties=pika.BasicProperties(delivery_mode = 2))
         print(recipe_result)
+
+        # Return similar recipes to recommend the customer
         return jsonify(recipe_result)
     
     print('order_result:', order_result['success'])
@@ -65,6 +67,7 @@ def get_sessionid():
         payment_result = payment_call.json()
         return jsonify(payment_result)
 
+# Stripe sends post message to signal that payment has been made and sends payment details
 @app.route('/stripe_webhook', methods=['POST'])
 def stripe_webhook():
     print('WEBHOOK called')
@@ -90,16 +93,15 @@ def stripe_webhook():
     # Handle the event
     if event['type'] == 'checkout.session.completed':
 
-        # checkout_session = event['data']
-        # email = checkout_session['object']['customer_details']['email']
+        # Get checkout session payment details of customer
         session = stripe.checkout.Session.list(limit=1)
         email = session['data'][0]['customer_details']['email']
         address = session['data'][0]['custom_fields'][0]['text']['value']
         postal_code = session['data'][0]['custom_fields'][1]['text']['value']
         amount = session['data'][0]['amount_total']
         price = "$" + str("{:.2f}".format(amount/100))
-        # print(session['data'][0]['amount_total'])
-        # print(email)
+        
+        print(session['data'])
         data = {
             'price': price,
             'email': email,
