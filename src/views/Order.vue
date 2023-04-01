@@ -28,7 +28,7 @@
 
         <!-- RECOMMENDED FOR YOU SECTION -->
         <h3 class="text-center p-5 mt-4">
-          Yo may try other recommended recipes below:
+          You may try other recommended recipes below:
         </h3>
         <div class="row d-flex justify-content-center">
           <div

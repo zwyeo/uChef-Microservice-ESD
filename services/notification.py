@@ -48,7 +48,7 @@ def send_email():
         )
         return jsonify({"code": 200, "data": 'OK. Email sent successfully.'}), 200
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response['Error']['Message'])   
         return jsonify({"code": 400, "message": "Email failed to send. Please try again"}), 400
     
 
