@@ -52,4 +52,4 @@ def filter_by_category(arr, category):
     return [d for d in arr if d.get('strCategory') == category]
 
 if __name__ == '__main__':
-    app.run(port=5008, debug=True)
+    app.run(host='0.0.0.0',port=5008, debug=True)
