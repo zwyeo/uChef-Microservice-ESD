@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from os import environ
 import requests
 
 app = Flask(__name__)
 CORS(app)
 
-fairprice_url = "http://localhost:5003/supermarketStock"
-coldstorage_url = "http://localhost:5004/supermarketStock"
+fairprice_url = environ.get('fairprice_url') or "http://localhost:5003/supermarketStock"
+coldstorage_url = environ.get('coldstorage_url') or "http://localhost:5004/supermarketStock"
 
 @app.route('/order', methods=['GET','POST'])
 def place_order():
