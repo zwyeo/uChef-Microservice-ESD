@@ -27,7 +27,9 @@ def place_delivery():
   
     # 1. Invoke the order microservice
     print('\n-----Invoking order microservice-----')
+    print("data is: ", data)
     order_call = requests.post(order_URL, json=data)
+    print("order call is: ", order_call)
     order_result = order_call.json()
 
     if order_result['success'] == False:

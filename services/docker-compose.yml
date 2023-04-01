@@ -78,8 +78,8 @@ services:
       - fairprice
       - coldStorage
     environment:
-      fairprice_url: http://fairprice:5003/supermarketStock
-      coldStorage_url: http://coldstorage:5004/supermarketStock
+      fairprice_url: http://host.docker.internal:5003/supermarketStock
+      coldStorage_url: http://host.docker.internal:5004/supermarketStock
       PYTHONUNBUFFERED: 1
     ports:
       - "5002:5002"
