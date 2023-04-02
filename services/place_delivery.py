@@ -28,7 +28,7 @@ def place_delivery():
   
     # 1. Invoke the order microservice
     print('\n-----Invoking order microservice-----')
-    print("data is: ", data)
+    print("Send order microservice: ", data)
     order_call = requests.post(order_URL, json=data)
     order_result = order_call.json()
     print('Order Details received: ', order_result)
