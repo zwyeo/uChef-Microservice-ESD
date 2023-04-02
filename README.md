@@ -20,6 +20,9 @@ This is for the stripe webhook to work. Please install the stripe CLI listener b
 
 ```
 brew install stripe/stripe-cli/stripe
+
+sudo stripe login --interactive
+
 sudo stripe listen --forward-to localhost:5001/stripe_webhook
 ```
 

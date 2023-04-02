@@ -10,6 +10,7 @@ CORS(app)
 
 stripe.api_key = 'sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9'
 
+
 order_URL = "http://host.docker.internal:5002/order"
 fairprice_URL = "http://host.docker.internal:5003/supermarketStock"
 coldStorage_URL = "http://host.docker.internal:5004/supermarketStock"
@@ -66,6 +67,7 @@ def get_sessionid():
         payment_call = requests.post(payment_URL, json=data)
         payment_result = payment_call.json()
         return jsonify(payment_result)
+
 
 # Stripe sends post message to signal that payment has been made and sends payment details
 @app.route('/stripe_webhook', methods=['POST'])
