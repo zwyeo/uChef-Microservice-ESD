@@ -30,28 +30,30 @@ def place_delivery():
     print('\n-----Invoking order microservice-----')
     print("data is: ", data)
     order_call = requests.post(order_URL, json=data)
-    print("order call is: ", order_call)
     order_result = order_call.json()
+    print('Order Details received: ', order_call)
+    print('order_result:', order_result['success'])
 
     if order_result['success'] == False:
         #2. Invoke recipe microservice
-        print('\n-----Invoking recipe microservice-----')
+        print('\n-----DELIVERY OREDER OUT OF STOCK-----')
+        print('\n-----Invoking recipe microservice to get similar recipes-----')
         details = {
                    'category':data['category'], 
                    'id':data['id'] 
                    }
         recipe_call = requests.get(recipe_URL, json=details)
         recipe_result = recipe_call.json()
-
+        print('Similar recipes found: ', recipe_call)
 
         # 3. Invoke error microservice since there is error
+        print('\n-----Sending error to amqp for error microservice-----')
         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='order.error', body="Error: The items in the delivery order are out of stock", properties=pika.BasicProperties(delivery_mode = 2))
         print(recipe_result)
 
         # Return similar recipes to recommend the customer
         return jsonify(recipe_result)
     
-    print('order_result:', order_result['success'])
 
     return jsonify(order_result)
 
@@ -66,6 +68,10 @@ def get_sessionid():
         # Retrieve Session ID
         payment_call = requests.post(payment_URL, json=data)
         payment_result = payment_call.json()
+        print('STRIPE SESSION ID RECEIVED')
+        print('\nSession id: ', payment_call)
+
+
         return jsonify(payment_result)
 
 
@@ -103,7 +109,6 @@ def stripe_webhook():
         amount = session['data'][0]['amount_total']
         price = "$" + str("{:.2f}".format(amount/100))
         
-        print(session['data'])
         data = {
             'price': price,
             'email': email,
