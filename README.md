@@ -20,9 +20,15 @@ This is for the stripe webhook to work. Please install the stripe CLI listener b
 
 ```
 brew install stripe/stripe-cli/stripe
-
 sudo stripe login --interactive
+```
 
+Use the following API key when prompted
+API key: sk_test_51MmDHTHHejWNjfqnvGdRbaOCNtclUwprKx9MZXPvtEuRwPnaXtQdXt9ROhbZ1yMhkUJHPhBjOwRLSoEW8ULlfsZM00TtyTrit9
+Press 'Enter' when you see 'How would you like to identify this device in the Stripe Dashboard?'
+
+Use the following command
+```
 sudo stripe listen --forward-to localhost:5001/stripe_webhook
 ```
 
