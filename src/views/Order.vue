@@ -1,4 +1,5 @@
 <template>
+  
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <div v-if="supermarket == 'Cold Storage'">
@@ -243,10 +244,14 @@ export default {
 
     // Connect to the supermarket API and get the order info
     axios
-      .post("http://127.0.0.1:5001/delivery", {
+      // .post("http://127.0.0.1:5001/delivery", {
+        .post("http://localhost:8000/api/v1/delivery", {
         items: this.ingredient_list,
         category: this.$store.state.category,
         id: this.id,
+        headers: {
+          'Content-Type': 'application/json'
+        }  
       })
       .then((res) => {
         this.order_info = res.data;

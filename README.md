@@ -11,6 +11,18 @@ docker-compose build
 docker-compose up
 ```
 
+## Kong Setup
+
+Access Konga interface via localhost:1337
+Login with any credentials
+Click on snapshots on the left
+Import from file 
+Import Uchef Kong.json file in the main folder
+Click on details after file is imported
+Click restore 
+Tick all the checkboxes 
+Click Import Objects
+
 ### Required dependencies
 ***Ensure that all dependencies are installed before running docker-compose build***
 
