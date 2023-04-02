@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "231907482770",
+    "firebase_url": "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "wad-proj-22042",
+    "storage_bucket": "wad-proj-22042.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231907482770:android:70984b04ffd05ccc995a4b",
+        "android_client_info": {
+          "package_name": "com.example.esdandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231907482770-luldjl4b91lmalvfi9tn5ct99af8bbd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk5_8Pm2_UIQ89cXPMIwN39JgAMPmZTLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231907482770-luldjl4b91lmalvfi9tn5ct99af8bbd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
