@@ -81,10 +81,6 @@ Password: test123
 Do not type in index.html into the address bar as it will not work. Just use the address given in the terminal (most likely localhost:8080) as the root is being intercepted by our App.vue.
 To terminate your session, simply press Ctrl + C on your terminal.
 
-### Additional Notes
--   All database URLs are using pymysql instead of mysqlconnector. This is because our team mostly uses Mac OS and mysqlconnector is not supported on Mac OS. If you are using Windows, you may change the URL to use mysqlconnector instead.
--   For the same reason, all database paths also have root:root. If you are using Windows OS, please remove the second root and leave it as root.
-
 ### Credits
 
 G2T2 - Douglas, Zhi Wei, Jaden, Joseph, Zu Yao
