@@ -1,7 +1,7 @@
 # uchef
 
-## Fairprice & ColdStorage Database
-Please edit the DB URL to 'mysql+pymysql://root:@host.docker.internal:3306/coldStorage' for windows user if your credentials does not have a root password like mac users
+## Additional Notes
+Most of our development are done on MacOS. We have not tested our application extensively on Windows or Linux.
 
 ## Microservices setup
 
