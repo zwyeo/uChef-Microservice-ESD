@@ -7,6 +7,7 @@ Most of our development are done on MacOS. We have not tested our application ex
 
 Please make sure that you have docker running before proceeding further.
 Run the below command in your terminal upon loading up our application.
+Please also ensure that MAMP is running, and run the 2 sql files in src/data to create the Fairprice and ColdStorage schemas.
 
 ```
 cd services
