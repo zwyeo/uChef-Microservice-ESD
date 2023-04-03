@@ -277,8 +277,8 @@ export default {
       const orderDict = { order: orders };
       // console.log({ orders: this.order_info.order });
       axios
-        // .post("http://127.0.0.1:5005/create-checkout-session", orderDict)
-        .post("http://localhost:8000/api/v1/create-checkout-session", orderDict)
+        .post("http://127.0.0.1:5005/create-checkout-session", orderDict)
+        // .post("http://localhost:8000/api/v1/create-checkout-session", orderDict)
         .then((response) => {
           console.log(response);
           this.sessionId = response.data.sessionId;
