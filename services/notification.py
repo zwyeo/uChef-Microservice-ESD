@@ -18,8 +18,8 @@ def send_email():
     delivery_address = street_address + " " + postal_code
 
     # Create a new SES client
-    ses = boto3.client('ses',  aws_access_key_id='AKIAVFEET5SMSLP36BYB',
-                   aws_secret_access_key="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", region_name='ap-southeast-1')
+    ses = boto3.client('ses',  aws_access_key_id='key',
+                   aws_secret_access_key="secret_key", region_name='ap-southeast-1')
 
     # Create the message body
     message_body = f"Hello,\n\nHere are your payment details:\n\nPrice: {price}\n\nDelivery Address: {delivery_address}"
